@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Put a Finger Down</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#fff;--bg2:#f5f5f3;--bg3:#eeede8;--bdr:rgba(0,0,0,.12);--txt:#1a1a1a;--txt2:#666;--r:8px;--rl:12px;--red:#E24B4A;--redl:#FCEBEB;--redd:#A32D2D;}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;--bdr:rgba(255,255,255,.12);--txt:#f0f0f0;--txt2:#aaa;}}
+body{font-family:'DM Sans',sans-serif;background:var(--bg3);min-height:100vh;padding:1.5rem 1rem;}
+.g{max-width:640px;margin:0 auto;}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;gap:10px;}
+.t1{font-size:18px;font-weight:700;color:var(--txt);}
+.t2{font-size:12px;color:var(--txt2);margin-top:2px;}
+.ltog{display:flex;background:var(--bg2);border:.5px solid var(--bdr);border-radius:20px;padding:3px;gap:2px;flex-shrink:0;}
+.lb{border:none;background:transparent;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--txt2);font-family:'DM Sans',sans-serif;}
+.lb.on{background:var(--red);color:#fff;}
+.sc{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rl);padding:1.25rem;}
+.sl{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:.5rem;}
+.nr{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;}
+.nb{width:32px;height:32px;border:.5px solid var(--bdr);background:var(--bg2);border-radius:50%;font-size:18px;cursor:pointer;color:var(--txt);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;}
+.nv{font-size:18px;font-weight:700;color:var(--txt);min-width:24px;text-align:center;}
+.ng{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:1.25rem;}
+.ni{font-size:13px;padding:7px 10px;border:.5px solid var(--bdr);border-radius:var(--r);background:var(--bg2);color:var(--txt);font-family:'DM Sans',sans-serif;width:100%;}
+.ms{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.mb{border:.5px solid var(--bdr);background:var(--bg2);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;color:var(--txt2);font-family:'DM Sans',sans-serif;transition:all .15s;}
+.mb.on{background:var(--red);border-color:var(--red);color:#fff;}
+.bs{width:100%;background:var(--red);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.bs:hover{opacity:.88;}
+.gw{display:none;}.gw.on{display:block;}
+.qc{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rl);padding:1.5rem;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.6rem;position:relative;overflow:hidden;margin-bottom:1rem;}
+.qc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
+.qn{font-size:11px;font-weight:500;color:var(--red);letter-spacing:.05em;}
+.qe{font-size:30px;}
+.qp{font-size:12px;color:var(--txt2);}
+.qt{font-size:16px;font-weight:700;color:var(--txt);line-height:1.4;}
+.pb{height:3px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:.35rem;}
+.pf{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.ptt{font-size:11px;color:var(--txt2);text-align:center;margin-bottom:1rem;}
+.ts{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);background:var(--red);color:#fff;padding:7px 16px;border-radius:var(--r);font-weight:500;font-size:13px;opacity:0;pointer-events:none;transition:all .2s;white-space:nowrap;z-index:10;}
+.ts.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.pgl{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:.6rem;}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:1rem;}
+.pc{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--r);padding:10px 12px;display:flex;flex-direction:column;gap:6px;}
+.pc.out{opacity:.4;pointer-events:none;}
+.pt2{display:flex;align-items:center;gap:8px;}
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.pn{font-size:13px;font-weight:500;color:var(--txt);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fc{font-size:11px;color:var(--txt2);}
+.fs{display:flex;gap:2px;flex-wrap:wrap;}
+.fi{font-size:13px;transition:filter .25s,transform .25s;}
+.fi.dn{transform:rotate(180deg) scale(.8);}
+.fi.up{filter:grayscale(1) opacity(.3);}
+.bf{width:100%;border:none;border-radius:6px;padding:6px 0;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s,transform .1s;}
+.bf:active{transform:scale(.97);}
+.bf:hover{opacity:.85;}
+.sr{display:flex;justify-content:flex-end;margin-bottom:.5rem;}
+.bsk{background:var(--bg2);border:.5px solid var(--bdr);color:var(--txt2);padding:8px 18px;border-radius:var(--r);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.gbx{text-align:center;padding:1.5rem 1rem;display:none;background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rl);}
+.gbx.on{display:block;}
+.ge{font-size:44px;margin-bottom:.6rem;}
+.gh{font-size:20px;font-weight:700;color:var(--txt);margin-bottom:.4rem;}
+.gpp{font-size:13px;color:var(--txt2);margin-bottom:1rem;}
+.rks{margin-bottom:1.25rem;}
+.rr{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r);margin-bottom:4px;}
+.rm{font-size:14px;min-width:20px;}
+.rn{flex:1;font-size:14px;font-weight:500;}
+.rf{font-size:13px;color:var(--txt2);}
+.brr{background:var(--red);color:#fff;border:none;padding:10px 24px;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-right:8px;}
+.bnn{background:var(--bg2);border:.5px solid var(--bdr);color:var(--txt2);padding:10px 18px;border-radius:var(--r);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.tbadge{display:inline-block;background:var(--redl);color:var(--redd);font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+</style>
+</head>
+<body>
+<div class="g">
+<div class="top">
+  <div>
+    <div class="t1">Put a finger down ☝️ <span class="tbadge" id="tbadge">167 preguntas</span></div>
+    <div class="t2" id="sub">¡Pon un dedo abajo si...!</div>
+  </div>
+  <div class="ltog"><button class="lb on" onclick="sL('es')">ES</button><button class="lb" onclick="sL('en')">EN</button></div>
+</div>
+<div id="sw"><div class="sc">
+  <div class="sl" id="lp">Jugadores</div>
+  <div class="nr"><button class="nb" onclick="cN(-1)">−</button><span class="nv" id="nv">2</span><button class="nb" onclick="cN(1)">+</button></div>
+  <div class="ng" id="ng"></div>
+  <div class="sl" id="lm">Modo</div>
+  <div class="ms" id="mb"></div>
+  <button class="bs" id="bs" onclick="sG()">Jugar</button>
+</div></div>
+<div class="gw" id="gw">
+  <div class="qc" id="qc">
+    <span class="qn" id="qn"></span>
+    <span class="qe" id="qee"></span>
+    <span class="qp" id="qpp2"></span>
+    <p class="qt" id="qq"></p>
+    <div class="ts" id="ts"></div>
+  </div>
+  <div class="pb"><div class="pf" id="pf"></div></div>
+  <p class="ptt" id="ptt"></p>
+  <p class="pgl" id="pgl">¿A quién le aplica?</p>
+  <div class="pg" id="pg"></div>
+  <div class="sr"><button class="bsk" id="bsk" onclick="nQ()">→ Siguiente</button></div>
+</div>
+<div class="gbx" id="gbx">
+  <div class="ge" id="ge"></div>
+  <div class="gh" id="gg"></div>
+  <p class="gpp" id="gppp"></p>
+  <div class="rks" id="rks"></div>
+  <button class="brr" id="brr" onclick="rG()">🔄 Repetir</button>
+  <button class="bnn" id="bnn" onclick="gS()">Nuevo juego</button>
+</div>
+</div>
+<script>
+const MDS=[{k:'short',es:'⚡ Corto',en:'⚡ Short',c:10},{k:'mid',es:'🎯 Medio',en:'🎯 Medium',c:20},{k:'long',es:'🔥 Largo',en:'🔥 Long',c:50},{k:'inf',es:'∞ Infinito',en:'∞ Infinite',c:null}];
+const CLS=[{bg:'#E6F1FB',fg:'#0C447C'},{bg:'#FCEBEB',fg:'#A32D2D'},{bg:'#E1F5EE',fg:'#085041'},{bg:'#FAECE7',fg:'#712B13'},{bg:'#EEEDFE',fg:'#3C3489'},{bg:'#FBEAF0',fg:'#72243E'},{bg:'#EAF3DE',fg:'#27500A'},{bg:'#FAEEDA',fg:'#633806'},{bg:'#F1EFE8',fg:'#444441'},{bg:'#FCEBEB',fg:'#791F1F'}];
+const TX={
+  es:{sub:"¡Pon un dedo abajo si...!",pre:"Pon un dedo abajo si...",of:"de",pgl:"¿A quién le aplica?",sk:"→ Siguiente",fd:"☝️ Bajo un dedo",out:"Sin dedos",ts:"¡Dedo abajo!",lp:"Jugadores",lm:"Modo",bp:"Jugar",br:"🔄 Repetir",bn:"Nuevo juego",rk:"Clasificación final",sf:"dedos",tb:"preguntas",go:[{m:0,e:"🏆",h:"¡Nadie bajó ningún dedo!",p:"Grupo muy inocente... ¿o muy mentiroso?"},{m:5,e:"😏",h:"Bastante limpios",p:"Poca acción en este grupo."},{m:15,e:"😅",h:"Algo de historia",p:"Unos cuantos dedos en el suelo."},{m:30,e:"🤭",h:"Grupo con secretos",p:"Bastantes dedos. Interesante..."},{m:99,e:"🔥",h:"¡Grupo legendario!",p:"Aquí se ha vivido mucho."}]},
+  en:{sub:"Put a finger down if...!",pre:"Put a finger down if...",of:"of",pgl:"Who does it apply to?",sk:"→ Next",fd:"☝️ Finger down",out:"No fingers left",ts:"Finger down!",lp:"Players",lm:"Mode",bp:"Play",br:"🔄 Play again",bn:"New game",rk:"Final rankings",sf:"fingers",tb:"questions",go:[{m:0,e:"🏆",h:"Nobody put a finger down!",p:"Very innocent group... or very dishonest?"},{m:5,e:"😏",h:"Pretty clean",p:"Not much going on."},{m:15,e:"😅",h:"Some history",p:"A few fingers on the floor."},{m:30,e:"🤭",h:"Group with secrets",p:"Quite a few fingers."},{m:99,e:"🔥",h:"Legendary group!",p:"A lot has happened here."}]}
+};
+
+const Q={
+es:[
+  {e:"✈️",q:"... has perdido un vuelo"},
+  {e:"🧳",q:"... has perdido tu equipaje"},
+  {e:"🌍",q:"... has viajado a más de 5 países"},
+  {e:"😴",q:"... te has quedado dormido/a en un avión"},
+  {e:"🏨",q:"... te has quedado en un hostel"},
+  {e:"🚂",q:"... has cogido un tren equivocado"},
+  {e:"🗺️",q:"... te has perdido en una ciudad extranjera"},
+  {e:"🚕",q:"... has olvidado algo en un taxi"},
+  {e:"🌅",q:"... has visto un amanecer en otro país"},
+  {e:"🍕",q:"... has comido pizza fría al día siguiente"},
+  {e:"🌶️",q:"... has llorado comiendo algo picante"},
+  {e:"🥢",q:"... has pedido algo sin saber qué era"},
+  {e:"🍰",q:"... has comido la tarta de otra persona"},
+  {e:"🍟",q:"... has robado patatas fritas a alguien"},
+  {e:"🥗",q:"... has pedido ensalada y te has arrepentido"},
+  {e:"🧀",q:"... has comido queso caducado"},
+  {e:"🍫",q:"... te has comido un chocolate que no era tuyo"},
+  {e:"😬",q:"... has fingido que te gustó una comida horrible"},
+  {e:"📱",q:"... has visto stories sin responder un mensaje"},
+  {e:"😐",q:"... has fingido no ver a alguien para no saludar"},
+  {e:"🎂",q:"... has olvidado el cumpleaños de alguien importante"},
+  {e:"👻",q:"... le has hecho ghosting a alguien"},
+  {e:"📲",q:"... has leído un mensaje y no respondiste en días"},
+  {e:"🤫",q:"... has contado un secreto que juraste guardar"},
+  {e:"😂",q:"... te has reído en un momento muy inapropiado"},
+  {e:"🤥",q:"... has dicho 'ya voy' sin haber salido"},
+  {e:"🙄",q:"... has puesto los ojos en blanco sin que te vieran"},
+  {e:"😳",q:"... te has caído en público"},
+  {e:"🚿",q:"... has entrado al baño incorrecto"},
+  {e:"😅",q:"... has saludado a alguien que no te saludaba"},
+  {e:"👋",q:"... has llamado 'mamá' o 'papá' a un/a profe"},
+  {e:"🎤",q:"... has cantado muy alto creyendo estar solo/a"},
+  {e:"👖",q:"... has salido con la ropa al revés"},
+  {e:"📩",q:"... has mandado un mensaje a quien no debías"},
+  {e:"🪑",q:"... te has caído de una silla"},
+  {e:"💻",q:"... has compartido pantalla con algo comprometedor"},
+  {e:"💨",q:"... se te ha escapado un pedo en mal momento"},
+  {e:"🌙",q:"... has dormido más de 12 horas seguidas"},
+  {e:"🎮",q:"... has pasado más de 8h jugando videojuegos"},
+  {e:"📚",q:"... has fingido haber leído un libro"},
+  {e:"🎬",q:"... has visto una serie entera en un día"},
+  {e:"💸",q:"... has gastado dinero en algo completamente inútil"},
+  {e:"🐾",q:"... has hablado con tu mascota como si te entendiera"},
+  {e:"🌧️",q:"... has bailado bajo la lluvia"},
+  {e:"🤳",q:"... te has sacado 20 selfies para elegir una"},
+  {e:"🎵",q:"... has cantado en la ducha creyendo ser estrella"},
+  {e:"🛒",q:"... fuiste al súper con hambre y compraste el doble"},
+  {e:"🎁",q:"... has regalado algo que tú mismo/a habías recibido"},
+  {e:"🦷",q:"... tenías comida en los dientes y nadie te lo dijo"},
+  {e:"🤸",q:"... has tropezado en público"},
+  {e:"🧠",q:"... has olvidado el nombre de alguien nada más conocerle"},
+  {e:"🎙️",q:"... se te ha quebrado la voz en un momento de silencio"},
+  {e:"👗",q:"... has sufrido un accidente de ropa en público"},
+  {e:"🎼",q:"... te has olvidado la letra cantando una canción"},
+  {e:"😹",q:"... se te ha escapado una carcajada por la nariz"},
+  {e:"🚌",q:"... te has pasado de parada en el transporte público"},
+  {e:"💦",q:"... has escupido sin querer hablando con alguien"},
+  {e:"🪟",q:"... te has chocado con una puerta de cristal"},
+  {e:"😂",q:"... has llorado de risa en público"},
+  {e:"🏷️",q:"... has llamado a alguien por el nombre equivocado"},
+  {e:"🗣️",q:"... te han pillado hablando solo/a"},
+  {e:"☕",q:"... se te ha derramado comida o bebida encima en público"},
+  {e:"❤️",q:"... has dado like a una foto muy antigua de alguien espiando sus redes"},
+  {e:"🫃",q:"... tu estómago ha sonado muy fuerte en un sitio tranquilo"},
+  {e:"💬",q:"... te han pillado cotilleando"},
+  {e:"🎭",q:"... has puesto acento falso y no podías parar"},
+  {e:"🧻",q:"... has salido al baño con papel higiénico en el zapato"},
+  {e:"👀",q:"... has confundido a un desconocido con alguien que conocías"},
+  {e:"💇",q:"... has tenido un pelo terrible en un evento importante"},
+  {e:"😱",q:"... te has asustado tanto que has gritado en público"},
+  {e:"🤒",q:"... has mentido diciendo que estabas enfermo/a"},
+  {e:"🎥",q:"... has llorado en el cine"},
+  {e:"📱",q:"... has tirado el móvil al váter"},
+  {e:"🪥",q:"... has usado el cepillo de dientes de otro/a sin querer"},
+  {e:"🤧",q:"... te ha salido algo por la nariz de tanto reírte"},
+  {e:"🛏️",q:"... te has ido a dormir sin lavarte los dientes"},
+  {e:"🍮",q:"... has comido postre antes que la comida principal"},
+  {e:"📝",q:"... has olvidado los deberes"},
+  {e:"🦶",q:"... has tropezado con tus propios pies"},
+  {e:"🪞",q:"... has hecho muecas tontas delante del espejo"},
+  {e:"🧦",q:"... has llevado calcetines desparejados sin querer"},
+  {e:"🎤",q:"... has hecho karaoke"},
+  {e:"🌲",q:"... has subido a un árbol de adulto/a"},
+  {e:"❄️",q:"... has hecho un ángel en la nieve"},
+  {e:"🍽️",q:"... has comido algo que se te cayó al suelo"},
+  {e:"😜",q:"... le has gastado una broma a alguien"},
+  {e:"👅",q:"... has intentado lamerte el codo"},
+  {e:"🥫",q:"... has comido algo que sabías que estaba caducado"},
+  {e:"📵",q:"... has husmeado en el móvil de alguien sin que lo supiera"},
+  {e:"💕",q:"... has dicho 'te quiero' a alguien por accidente"},
+  {e:"🍽️",q:"... has entrado en un restaurante y te has ido sin pedir porque era muy caro"},
+  {e:"👕",q:"... te has quedado atascado/a en una prenda probándotela"},
+  {e:"🏊",q:"... has perdido el bañador en el agua en público"},
+  {e:"⏰",q:"... has dormido con la alarma y has faltado a algo importante"},
+  {e:"🐦",q:"... te ha hecho caca un pájaro encima"},
+  {e:"😶",q:"... has mantenido una conversación fingiendo saber quién era la otra persona"},
+  {e:"🎉",q:"... has ido a una fiesta a la que no te habían invitado"},
+  {e:"🎨",q:"... tienes un tatuaje"},
+  {e:"🍦",q:"... te has comido un bote entero de helado"},
+  {e:"😢",q:"... has tenido el corazón roto"},
+  {e:"🦴",q:"... te has roto algún hueso"},
+  {e:"😴",q:"... te han dicho que roncas muy fuerte"},
+  {e:"📵",q:"... has fingido estar hablando por teléfono para evitar una conversación"},
+  {e:"👻",q:"... has visto un fantasma"},
+  {e:"🏠",q:"... has dicho a tus padres que dormías en casa de un/a amigo/a pero estabas en otro sitio"},
+  {e:"🤼",q:"... has empezado una pelea intencionadamente"},
+  {e:"🏥",q:"... has pasado una noche en el hospital"},
+  {e:"🔮",q:"... has ido a un vidente o echador de cartas"},
+  {e:"💻",q:"... has tenido una relación completamente online"},
+  {e:"😭",q:"... has llorado hasta quedarte dormido/a"},
+  {e:"🏂",q:"... has hecho snowboard"},
+  {e:"🎬",q:"... has gritado de miedo en una película de terror"},
+  {e:"👕",q:"... te has puesto algo de la ropa sucia porque no tenías otra cosa"},
+  {e:"🎲",q:"... te has puesto muy serio/a en una noche de juegos de mesa"},
+  {e:"👃",q:"... hay algún olor que se supone que es asqueroso pero te gusta"},
+  {e:"🔍",q:"... te has buscado a ti mismo/a en Google"},
+  {e:"💰",q:"... has perdido una apuesta"},
+  {e:"🧻",q:"... has envuelto en papel de váter la casa de alguien"},
+  {e:"🏍️",q:"... has ido en moto"},
+  {e:"🚗",q:"... has conducido en dirección contraria por una calle de un solo sentido"},
+  {e:"🐎",q:"... te ha tirado un caballo"},
+  {e:"⭐",q:"... has conocido a un famoso/a en persona"},
+  {e:"🤝",q:"... has ayudado a un/a amigo/a a mentir"},
+  {e:"🌙",q:"... has pasado una noche en vela sin dormir nada"},
+  {e:"💉",q:"... tienes un piercing que casi nadie sabe"},
+  {e:"🎉",q:"... te han hecho una fiesta sorpresa"},
+  {e:"😴",q:"... te has dormido en clase"},
+  {e:"🚶",q:"... has hecho sonambulismo"},
+  {e:"🗣️",q:"... has extendido un rumor a sabiendas"},
+  {e:"🍦",q:"... te has comido nata montada directamente del bote"},
+  {e:"📖",q:"... has leído un libro entero en un día"},
+  {e:"💬",q:"... has dejado a alguien en 'visto' sin responder"},
+  {e:"🤥",q:"... has mentido para cancelar planes con amigos"},
+  {e:"💌",q:"... has usado una frase de ligue"},
+  {e:"😤",q:"... has dejado plantado/a a alguien"},
+  {e:"😢",q:"... te han dejado plantado/a a ti"},
+  {e:"💔",q:"... has estado en una relación que sabías que no debías seguir"},
+  {e:"💑",q:"... has tenido una relación que duró menos de un mes"},
+  {e:"🗓️",q:"... has tenido una relación que duró más de un año"},
+  {e:"😍",q:"... te has enamorado a primera vista"},
+  {e:"🏫",q:"... te han mandado al despacho del director/a"},
+  {e:"😢",q:"... has llorado en el colegio o instituto"},
+  {e:"🤒",q:"... has fingido estar enfermo/a para no ir al colegio"},
+  {e:"👻",q:"... has dormido en un sitio que dicen que está encantado"},
+  {e:"🤫",q:"... has revelado algo que se supone que era un secreto"},
+  {e:"🍳",q:"... has cocinado tu comida favorita desde cero"},
+  {e:"⭐",q:"... alguna vez has deseado ser famoso/a"},
+  {e:"✂️",q:"... te has cortado el pelo tú mismo/a"},
+  {e:"🎮",q:"... has terminado un videojuego al 100%"},
+  {e:"🐊",q:"... has visto un cocodrilo o caimán en la vida real"},
+  {e:"🤝",q:"... has ayudado a un/a amigo/a en un momento difícil"},
+  {e:"🃏",q:"... has jugado a juegos de cartas tipo Go Fish"},
+  {e:"🚤",q:"... nunca has ido en barco"},
+  {e:"✈️",q:"... has viajado completamente solo/a"},
+  {e:"🚢",q:"... has ido en crucero"},
+  {e:"🚂",q:"... has viajado en tren de larga distancia"},
+  {e:"🚁",q:"... has montado en limusina"},
+  {e:"🪂",q:"... has hecho paracaidismo"},
+
+  {e:"💋",q:"... has besado en público"},
+  {e:"💘",q:"... has salido con alguien sin conocerle de nada (cita a ciegas)"},
+  {e:"💏",q:"... has besado a tu mejor amigo/a"},
+  {e:"😘",q:"... has besado a más de una persona en el mismo día"},
+  {e:"📩",q:"... te has deslizado en los DMs de alguien que te gustaba"},
+  {e:"🔍",q:"... has stalkeado a un/a ex en redes sociales"},
+  {e:"😍",q:"... te has enamorado de un/a profe"},
+  {e:"🖨️",q:"... has dejado la impresora sin tinta para que la siguiente persona lo resuelva"},
+  {e:"🔐",q:"... has intentado adivinar la contraseña de alguien"}],
+en:[
+  {e:"✈️",q:"... you've missed a flight"},
+  {e:"🧳",q:"... you've lost your luggage"},
+  {e:"🌍",q:"... you've visited more than 5 countries"},
+  {e:"😴",q:"... you've fallen asleep on a plane"},
+  {e:"🏨",q:"... you've stayed in a hostel"},
+  {e:"🚂",q:"... you've taken the wrong train"},
+  {e:"🗺️",q:"... you've gotten lost in a foreign city"},
+  {e:"🚕",q:"... you've forgotten something in a taxi"},
+  {e:"🌅",q:"... you've watched a sunrise in another country"},
+  {e:"🍕",q:"... you've eaten cold pizza the next day"},
+  {e:"🌶️",q:"... you've cried eating something spicy"},
+  {e:"🥢",q:"... you've ordered something you didn't recognize"},
+  {e:"🍰",q:"... you've eaten someone else's cake"},
+  {e:"🍟",q:"... you've stolen someone's fries"},
+  {e:"🥗",q:"... you've ordered a salad and regretted it"},
+  {e:"🧀",q:"... you've eaten expired cheese"},
+  {e:"🍫",q:"... you've eaten someone else's chocolate"},
+  {e:"😬",q:"... you've pretended to enjoy a meal you hated"},
+  {e:"📱",q:"... you've watched stories without replying to a text"},
+  {e:"😐",q:"... you've pretended not to see someone to avoid saying hi"},
+  {e:"🎂",q:"... you've forgotten an important birthday"},
+  {e:"👻",q:"... you've ghosted someone"},
+  {e:"📲",q:"... you've read a message and not replied for days"},
+  {e:"🤫",q:"... you've told a secret you swore to keep"},
+  {e:"😂",q:"... you've laughed at a completely wrong moment"},
+  {e:"🤥",q:"... you've said 'on my way' without having left"},
+  {e:"🙄",q:"... you've rolled your eyes (caught or not)"},
+  {e:"😳",q:"... you've fallen in public"},
+  {e:"🚿",q:"... you've walked into the wrong bathroom"},
+  {e:"😅",q:"... you've waved at someone who wasn't waving at you"},
+  {e:"👋",q:"... you've called a teacher 'mom' or 'dad'"},
+  {e:"🎤",q:"... you've sung loudly thinking you were alone"},
+  {e:"👖",q:"... you've gone out with clothes inside-out"},
+  {e:"📩",q:"... you've sent a text to the wrong person"},
+  {e:"🪑",q:"... you've fallen off a chair"},
+  {e:"💻",q:"... you've screen-shared something embarrassing"},
+  {e:"💨",q:"... you've had an awkward silent fart at the worst time"},
+  {e:"🌙",q:"... you've slept more than 12 hours straight"},
+  {e:"🎮",q:"... you've played video games for 8+ hours"},
+  {e:"📚",q:"... you've pretended to have read a book"},
+  {e:"🎬",q:"... you've watched an entire series in one day"},
+  {e:"💸",q:"... you've spent money on something completely useless"},
+  {e:"🐾",q:"... you've talked to your pet like they understand you"},
+  {e:"🌧️",q:"... you've danced in the rain"},
+  {e:"🤳",q:"... you've taken 20+ selfies just to pick one"},
+  {e:"🎵",q:"... you've sung in the shower imagining you're famous"},
+  {e:"🛒",q:"... you went grocery shopping hungry and bought double"},
+  {e:"🎁",q:"... you've re-gifted something you received"},
+  {e:"🦷",q:"... you've had food stuck in your teeth and no one told you"},
+  {e:"🤸",q:"... you've tripped in public"},
+  {e:"🧠",q:"... you've forgotten someone's name right after meeting them"},
+  {e:"🎙️",q:"... your voice has cracked loudly in a quiet room"},
+  {e:"👗",q:"... you've had a wardrobe malfunction in public"},
+  {e:"🎼",q:"... you've forgotten the lyrics while singing a song"},
+  {e:"😹",q:"... you've snorted while laughing"},
+  {e:"🚌",q:"... you've slept through your stop on public transport"},
+  {e:"💦",q:"... you've accidentally spit while talking to someone"},
+  {e:"🪟",q:"... you've walked into a glass door or window"},
+  {e:"😂",q:"... you've laughed so hard you cried in public"},
+  {e:"🏷️",q:"... you've called someone by the wrong name"},
+  {e:"🗣️",q:"... you've been caught talking to yourself"},
+  {e:"☕",q:"... you've had a drink or food spill on your clothes in public"},
+  {e:"❤️",q:"... you've accidentally liked someone's old photo while stalking their profile"},
+  {e:"🫃",q:"... your stomach has rumbled loudly in a quiet room"},
+  {e:"💬",q:"... you've been overheard gossiping"},
+  {e:"🎭",q:"... you've talked in a fake accent and couldn't stop"},
+  {e:"🧻",q:"... you've had toilet paper stuck to your shoe"},
+  {e:"👀",q:"... you've mistaken a stranger for someone you know"},
+  {e:"💇",q:"... you've had a really bad hair day at an important event"},
+  {e:"😱",q:"... you've been so startled you screamed or jumped in public"},
+  {e:"🤒",q:"... you've lied about being sick"},
+  {e:"🎥",q:"... you've cried at a movie"},
+  {e:"📱",q:"... you've dropped your phone in the toilet"},
+  {e:"🪥",q:"... you've used someone else's toothbrush"},
+  {e:"🤧",q:"... you've laughed so hard a drink came out of your nose"},
+  {e:"🛏️",q:"... you've gone to bed without brushing your teeth"},
+  {e:"🍮",q:"... you've eaten dessert before dinner"},
+  {e:"📝",q:"... you've forgotten your homework"},
+  {e:"🦶",q:"... you've tripped over your own feet"},
+  {e:"🪞",q:"... you've made a silly face in a mirror"},
+  {e:"🧦",q:"... you've worn mismatched socks"},
+  {e:"🎤",q:"... you've sung karaoke"},
+  {e:"🌲",q:"... you've climbed a tree"},
+  {e:"❄️",q:"... you've made a snow angel"},
+  {e:"🍽️",q:"... you've eaten something you dropped on the floor"},
+  {e:"😜",q:"... you've played a prank on someone"},
+  {e:"👅",q:"... you've tried to lick your elbow"},
+  {e:"🥫",q:"... you've eaten something you knew was expired"},
+  {e:"📵",q:"... you've snooped through someone's phone"},
+  {e:"💕",q:"... you've accidentally said 'I love you' to someone"},
+  {e:"🍽️",q:"... you've gone to a restaurant and left without ordering because it was too expensive"},
+  {e:"👕",q:"... you've gotten stuck in clothing while trying it on"},
+  {e:"🏊",q:"... you've lost your swimwear in public water"},
+  {e:"⏰",q:"... you've slept through your alarm and missed something important"},
+  {e:"🐦",q:"... you've had a bird poop on you"},
+  {e:"😶",q:"... you've had a conversation pretending to know who the other person was"},
+  {e:"🎉",q:"... you've gone to a party you weren't invited to"},
+  {e:"🎨",q:"... you have a tattoo"},
+  {e:"🍦",q:"... you've eaten an entire carton of ice cream"},
+  {e:"😢",q:"... you've had a broken heart"},
+  {e:"🦴",q:"... you've ever broken a bone"},
+  {e:"😴",q:"... you've been told you snore loudly"},
+  {e:"📵",q:"... you've pretended to be on the phone to avoid a conversation"},
+  {e:"👻",q:"... you've seen a ghost"},
+  {e:"🏠",q:"... you've told your parents you were at a friend's but were really somewhere else"},
+  {e:"🤼",q:"... you've ever intentionally started a fight with someone"},
+  {e:"🏥",q:"... you've spent the night in the hospital"},
+  {e:"🔮",q:"... you've ever been to a psychic"},
+  {e:"💻",q:"... you've had a relationship that was completely online"},
+  {e:"😭",q:"... you've ever cried yourself to sleep"},
+  {e:"🏂",q:"... you've been snowboarding"},
+  {e:"🎬",q:"... you've screamed during a scary movie"},
+  {e:"👕",q:"... you've worn something out of your dirty laundry"},
+  {e:"🎲",q:"... you've gotten heated during a family game night"},
+  {e:"👃",q:"... you enjoy a smell that's supposed to be gross"},
+  {e:"🔍",q:"... you've ever Googled yourself"},
+  {e:"💰",q:"... you've lost a bet"},
+  {e:"🧻",q:"... you've ever toilet-papered someone's house"},
+  {e:"🏍️",q:"... you've ever ridden a motorcycle"},
+  {e:"🚗",q:"... you've driven the wrong way down a one-way road"},
+  {e:"🐎",q:"... you've been bucked off a horse"},
+  {e:"⭐",q:"... you've ever met a celebrity"},
+  {e:"🤝",q:"... you've ever helped a friend lie"},
+  {e:"🌙",q:"... you've ever pulled an all-nighter"},
+  {e:"💉",q:"... you've gotten a piercing no one knows about"},
+  {e:"🎉",q:"... you've had a surprise party thrown for you"},
+  {e:"😴",q:"... you've ever fallen asleep in class"},
+  {e:"🚶",q:"... you've ever sleepwalked"},
+  {e:"🗣️",q:"... you've knowingly spread a rumor"},
+  {e:"🍦",q:"... you've eaten whipped cream straight out of the can"},
+  {e:"📖",q:"... you've ever read a whole book in one day"},
+  {e:"💬",q:"... you've left someone on read"},
+  {e:"🤥",q:"... you've lied to get out of plans with friends"},
+  {e:"💌",q:"... you've ever used a pick-up line"},
+  {e:"😤",q:"... you've ever stood someone up"},
+  {e:"😢",q:"... you've ever been stood up"},
+  {e:"💔",q:"... you've stayed in a relationship you knew you shouldn't have"},
+  {e:"💑",q:"... you've had a relationship last less than a month"},
+  {e:"🗓️",q:"... you've had a relationship last longer than a year"},
+  {e:"😍",q:"... you've fallen in love at first sight"},
+  {e:"🏫",q:"... you've ever been sent to the principal's office"},
+  {e:"😢",q:"... you've ever cried at school"},
+  {e:"🤒",q:"... you've ever pretended to be sick to get out of school"},
+  {e:"👻",q:"... you've stayed somewhere haunted"},
+  {e:"🤫",q:"... you've told a secret you weren't supposed to share"},
+  {e:"🍳",q:"... you've made your favorite food from scratch"},
+  {e:"⭐",q:"... you've ever wished you were famous"},
+  {e:"✂️",q:"... you've tried to cut your own hair"},
+  {e:"🎮",q:"... you've beaten a video game 100%"},
+  {e:"🐊",q:"... you've ever seen an alligator in real life"},
+  {e:"🤝",q:"... you've ever helped a friend in need"},
+  {e:"🃏",q:"... you've played Go Fish or similar card games"},
+  {e:"🚤",q:"... you've never been on a boat"},
+  {e:"✈️",q:"... you've ever traveled alone"},
+  {e:"🚢",q:"... you've ever been on a cruise"},
+  {e:"🚂",q:"... you've taken a long-distance train"},
+  {e:"🚁",q:"... you've ever ridden in a limo"},
+  {e:"🪂",q:"... you've been skydiving"},
+
+  {e:"💋",q:"... you've made out in public"},
+  {e:"💘",q:"... you've been on a blind date"},
+  {e:"💏",q:"... you've kissed your best friend"},
+  {e:"😘",q:"... you've kissed more than one person in a day"},
+  {e:"📩",q:"... you've slid into someone's DMs"},
+  {e:"🔍",q:"... you've social media stalked an ex"},
+  {e:"😍",q:"... you've had a crush on a teacher"},
+  {e:"🖨️",q:"... you've left the printer out of ink for the next person to deal with"},
+  {e:"🔐",q:"... you've tried to guess someone's password"}]};
+let lang='es',mode='short',nP=2,players=[],qs=[],cq=0;
+function L(){return TX[lang];}
+function QS(){return Q[lang];}
+function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function sL(l){lang=l;document.querySelectorAll('.lb').forEach((b,i)=>b.classList.toggle('on',(i===0&&l==='es')||(i===1&&l==='en')));document.getElementById('sub').textContent=L().sub;document.getElementById('tbadge').textContent=QS().length+' '+L().tb;aL();rM();rNG();}
+function aL(){const l=L();document.getElementById('lp').textContent=l.lp;document.getElementById('lm').textContent=l.lm;document.getElementById('bs').textContent=l.bp;document.getElementById('bsk').textContent=l.sk;document.getElementById('pgl').textContent=l.pgl;document.getElementById('brr').textContent=l.br;document.getElementById('bnn').textContent=l.bn;}
+function rM(){const b=document.getElementById('mb');b.innerHTML='';MDS.forEach(m=>{const btn=document.createElement('button');btn.className='mb'+(m.k===mode?' on':'');btn.textContent=lang==='es'?m.es:m.en;btn.onclick=()=>{mode=m.k;document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));btn.classList.add('on');};b.appendChild(btn);});}
+function cN(d){nP=Math.min(10,Math.max(1,nP+d));document.getElementById('nv').textContent=nP;rNG();}
+function rNG(){const g=document.getElementById('ng');g.innerHTML='';for(let i=0;i<nP;i++){const inp=document.createElement('input');inp.className='ni';inp.type='text';inp.placeholder=`${lang==='es'?'Jugador':'Player'} ${i+1}`;inp.id=`ni${i}`;g.appendChild(inp);}}
+function sG(){players=[];for(let i=0;i<nP;i++){const v=document.getElementById(`ni${i}`).value.trim()||(lang==='es'?`Jugador ${i+1}`:`Player ${i+1}`);const init=v.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();players.push({name:v,init,c:CLS[i%CLS.length],f:0,out:false});}const all=shuf([...QS()]);const m=MDS.find(x=>x.k===mode);qs=m.c===null?all:all.slice(0,Math.min(m.c,all.length));cq=0;document.getElementById('sw').style.display='none';document.getElementById('gw').classList.add('on');document.getElementById('gbx').classList.remove('on');rQ();rPG();}
+function rQ(){const q=qs[cq],l=L(),tot=qs.length,inf=MDS.find(x=>x.k===mode).c===null;document.getElementById('qn').textContent=inf?`${cq+1}`:`${cq+1} / ${tot}`;document.getElementById('qee').textContent=q.e;document.getElementById('qpp2').textContent=l.pre;document.getElementById('qq').textContent=q.q;document.getElementById('pf').style.width=inf?'0%':Math.round((cq/tot)*100)+'%';document.getElementById('ptt').textContent=inf?`${cq} ${l.of} ∞`:`${cq} ${l.of} ${tot}`;}
+function rPG(){const g=document.getElementById('pg');g.innerHTML='';const l=L();players.forEach((p,i)=>{const card=document.createElement('div');card.className='pc'+(p.out?' out':'');const fh=Array(10).fill(0).map((_,fi)=>`<span class="fi ${fi<p.f?'dn':'up'}">☝️</span>`).join('');const bs=p.out?'background:var(--bg2);color:var(--txt2);cursor:default;':`background:${p.c.bg};color:${p.c.fg};`;card.innerHTML=`<div class="pt2"><div class="av" style="background:${p.c.bg};color:${p.c.fg};">${p.init}</div><span class="pn">${p.name}</span><span class="fc">${p.f}/10</span></div><div class="fs">${fh}</div><button class="bf" style="${bs}" onclick="fD(${i})" ${p.out?'disabled':''}>${p.out?l.out:l.fd}</button>`;g.appendChild(card);});}
+function fD(i){if(players[i].out)return;players[i].f++;if(players[i].f>=10)players[i].out=true;const t=document.getElementById('ts');t.textContent=`${L().ts} ${players[i].name}`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),900);rPG();}
+function nQ(){cq++;const inf=MDS.find(x=>x.k===mode).c===null;if(players.every(p=>p.out)||(!inf&&cq>=qs.length)){eG();return;}if(inf&&cq>=qs.length){qs=[...qs,...shuf([...QS()])];}rQ();}
+function eG(){document.getElementById('gw').classList.remove('on');const gb=document.getElementById('gbx');gb.classList.add('on');const l=L();const tot=players.reduce((s,p)=>s+p.f,0);const res=l.go.find(r=>tot<=r.m)||l.go[l.go.length-1];document.getElementById('ge').textContent=res.e;document.getElementById('gg').textContent=res.h;document.getElementById('gppp').textContent=res.p;const sorted=[...players].sort((a,b)=>a.f-b.f);const minF=sorted[0].f;const rks=document.getElementById('rks');rks.innerHTML='';const hdr=document.createElement('p');hdr.style.cssText='font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:.6rem;';hdr.textContent=l.rk;rks.appendChild(hdr);sorted.forEach((p,i)=>{const row=document.createElement('div');row.className='rr';row.style.background=p.f===minF?p.c.bg:'var(--bg2)';const med=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}.`;row.innerHTML=`<span class="rm">${med}</span><span class="rn" style="color:${p.f===minF?p.c.fg:'var(--txt)'}">${p.name}</span><span class="rf">${p.f} ${l.sf}</span>`;rks.appendChild(row);});document.getElementById('brr').textContent=l.br;document.getElementById('bnn').textContent=l.bn;}
+function rG(){players.forEach(p=>{p.f=0;p.out=false;});const all=shuf([...QS()]);const m=MDS.find(x=>x.k===mode);qs=m.c===null?all:all.slice(0,Math.min(m.c,all.length));cq=0;document.getElementById('gbx').classList.remove('on');document.getElementById('gw').classList.add('on');rQ();rPG();}
+function gS(){document.getElementById('gbx').classList.remove('on');document.getElementById('gw').classList.remove('on');document.getElementById('sw').style.display='block';}
+rM();rNG();aL();
+document.getElementById("tbadge").textContent=Q.es.length+(lang==="es"?" preguntas":" questions");
+</script>
+</body>
+</html>
